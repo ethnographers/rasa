@@ -1,0 +1,14 @@
+{
+  "name": "rasa",
+  "version": "1.0.0",
+  "description": "rasa",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "license": "CC0-1.0",
+  "dependencies": {
+    "nodemon": "^1.12.1",
+    "ws": "^3.1.0"
+  }
+}
