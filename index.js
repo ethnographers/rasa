@@ -1,4 +1,6 @@
 const Cortex = require('./cortex.js')
+const io = require('socket.io')(process.env.PORT || 3000);
+console.log('server started')
 
 function rollingAverage (columns, windowSize) {
   let avgCount = 0
@@ -79,31 +81,36 @@ function numbers (client, windowSize, onResult) {
     })
 }
 
-if (require.main === module) {
-  process.on('unhandledRejection', (err) => { throw err })
+io.on('connection', function(socket){
+  console.log('client connected')
 
-  // Set LOG_LEVEL=2 or 3 for more detailed errors
-  const verbose = process.env.LOG_LEVEL || 1
-  const options = {verbose}
-  const avgWindow = 10
+  if (require.main === module) {
+    process.on('unhandledRejection', (err) => { throw err })
 
-  const client = new Cortex(options)
+    // Set LOG_LEVEL=2 or 3 for more detailed errors
+    const verbose = process.env.LOG_LEVEL || 1
+    const options = {verbose}
+    const avgWindow = 10
 
- // Auth token
-  const auth = {
-    username: 'XXXXXXXXXXX',
-    password: 'XXXXXXXXXXX',
-    client_id: 'XXXXXXXXXXX',
-    client_secret: 'XXXXXXXXXXX',
-    debit: 1
+    const client = new Cortex(options)
+
+   // Auth token
+    const auth = {
+      username: 'ethnographers',
+      password: 'Rasarasa1',
+      client_id: 'Yf9Ps21vJZs0tcYVxHJ8xTQdfQjTGdxWLTGHsAjK',
+      client_secret: '2JcRUcmBJxNaX7szLwUm6eyPDaZyPnxHhNdtFQrYGR6SEqcxIVQiOdwby7nHaNXzIMkBzrcvWtsvxkvQh96OnxWAxv29HLyb0Zcsi2ACKk5gVr9uxdVk0vozKHz09Eki',
+      debit: 1
+    }
+
+    client.ready
+      .then(() => client.init(auth))
+      .then(() =>
+        numbers(client, avgWindow, (output) => {
+          socket.emit('data', output);
+          // const output = Object.keys(averages)
+           // console.log(output)
+        })
+      )
   }
-
-  client.ready
-    .then(() => client.init(auth))
-    .then(() =>
-      numbers(client, avgWindow, (output) => {
-        // const output = Object.keys(averages)
-         console.log(output)
-      })
-    )
-}
+})
