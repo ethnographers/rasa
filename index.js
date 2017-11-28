@@ -96,10 +96,10 @@ io.on('connection', function(socket){
 
    // Auth token
     const auth = {
-      username: 'ethnographers',
-      password: 'Rasarasa1',
-      client_id: 'Yf9Ps21vJZs0tcYVxHJ8xTQdfQjTGdxWLTGHsAjK',
-      client_secret: '2JcRUcmBJxNaX7szLwUm6eyPDaZyPnxHhNdtFQrYGR6SEqcxIVQiOdwby7nHaNXzIMkBzrcvWtsvxkvQh96OnxWAxv29HLyb0Zcsi2ACKk5gVr9uxdVk0vozKHz09Eki',
+      username: 'XXXXXXXXXX',
+      password: 'XXXXXXXXXX',
+      client_id: 'XXXXXXXXXX',
+      client_secret: 'XXXXXXXXX',
       debit: 1
     }
 
